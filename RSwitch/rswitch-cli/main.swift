@@ -37,9 +37,12 @@ struct RSwitch: ParsableCommand {
       return()
     }
     
-    let newLink = (RVersions.macosRFramework as NSString).appendingPathComponent("\(versComponent)\(RVersions.archSuffix)")
+    // prefer `4.x-arm64`, but accept a plain `4.x` folder if it holds an arm64 build
+    let installed = RVersions.enumerateVersions()
+    let match = installed.first { $0.path == "\(versComponent)\(RVersions.archSuffix)" } ?? installed.first { $0.path == versComponent }
+    let newLink = (RVersions.macosRFramework as NSString).appendingPathComponent(match?.path ?? "\(versComponent)\(RVersions.archSuffix)")
 
-    if (fm.fileExists(atPath: newLink, isDirectory: &isDir)) {
+    if (match != nil && fm.fileExists(atPath: newLink, isDirectory: &isDir)) {
       if (!isDir.boolValue) {
         let msg = "Path exists but is not a directory."
         print(msg)
