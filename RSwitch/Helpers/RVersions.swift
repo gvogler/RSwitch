@@ -23,7 +23,7 @@ struct RVersion: CustomStringConvertible, Hashable, Identifiable {
   
   var shortVersion : String { return("\(path)") }
   var fullVersion : String { return("\(major).\(minor)") }
-  var verboseVersion : String { return("\(major).\(minor) [\(arch)] (\(year)-\(month)-\(day) r\(rev)) — \"\(nick)\"") }
+  var verboseVersion : String { return("\(major).\(minor) (\(year)-\(month)-\(day) r\(rev)) — \"\(nick)\"") }
   var incompleteVersion : String { return("\(path) — \"\(nick)\"") }
   
   var debugDescription: String {

@@ -81,7 +81,7 @@ struct ContentView: View {
       
     }
     .padding(10)
-    .frame(minWidth: 300.0, alignment: .top)
+    .frame(minWidth: 400.0, alignment: .top)
     .cornerRadius(5)
     .sheet(isPresented: $prefsShowing, content: {
       PrefsView(show: $prefsShowing)
