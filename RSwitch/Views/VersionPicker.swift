@@ -15,6 +15,7 @@ struct VersionPicker: View {
   func handleRSwitch(newIndex: Int) {
         
     let v = versionsModel.versions
+    guard v.indices.contains(newIndex) else { return() }
     let fm = FileManager.default
     let rmLink = (RVersions.macosRFramework as NSString).appendingPathComponent("Current")
     let newLink = (RVersions.macosRFramework as NSString).appendingPathComponent(v[newIndex].path)

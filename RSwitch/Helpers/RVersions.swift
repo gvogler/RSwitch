@@ -39,7 +39,7 @@ struct RVersion: CustomStringConvertible, Hashable, Identifiable {
 class RVersions: ObservableObject {
   
   @Published var versions: [RVersion] = enumerateVersions()
-  @Published var current: Int = currentVersionIndex()!
+  @Published var current: Int = currentVersionIndex() ?? -1
   
   static let defineRegex = try!NSRegularExpression(pattern: "#define [[:upper:]_]+[[:space:]]+|\"", options: NSRegularExpression.Options.useUnixLineSeparators)
   
@@ -58,10 +58,11 @@ class RVersions: ObservableObject {
   )
   
   static let macosRFramework = "/Library/Frameworks/R.framework/Versions" // Where the official R installs go
+  static let archSuffix = "-arm64" // Apple Silicon R installs live in e.g. `4.4-arm64`
   
   func updateVersions() {
     versions = RVersions.enumerateVersions()
-    current = RVersions.currentVersionIndex()!
+    current = RVersions.currentVersionIndex() ?? -1
   }
   
   static func extract(from: [String.SubSequence], what: String) -> String {
@@ -106,7 +107,7 @@ class RVersions: ObservableObject {
           day: extract(from: lines, what: "R_DAY"), // #define R_DAY    "08"
           nick: nickStr == "" ? "Unsuffered Consequences" : nickStr,
           rev: extract(from: lines, what: "R_SVN_REVISION"), // #define R_SVN_REVISION 79317
-          arch: fullPath.contains("arm64") ? "arm64" : "x86_64",
+          arch: "arm64",
           isCurrent: (currentTarget == versionPath),
           isComplete: hasRBinary(versionPath: versionPath)
         )
@@ -179,7 +180,7 @@ class RVersions: ObservableObject {
       entries = try FileManager.default
         .contentsOfDirectory(atPath: RVersions.macosRFramework)
         .sorted()
-        .filter { !($0.hasPrefix(".")) && !($0 == "Current") }
+        .filter { !($0.hasPrefix(".")) && $0.hasSuffix(archSuffix) }
         .map { vers in
           parseRHeaderAndAnalyzeDirectoryContents(versionPath: vers)
         }

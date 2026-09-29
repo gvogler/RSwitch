@@ -7,24 +7,9 @@ struct RSwitch: ParsableCommand {
   @Argument(help: "R version. e.g. 4.1")
   var vers: String?
   
-  @Option(name: [.customShort("a"), .long], help: "Architecture. arm64|x86_64. Defaults to system architecture.")
-  var arch: String?
-  
   @Flag(name: [.customShort("s"), .long], help: "No output after performing the switch.")
   var silent: Bool = false
 
-  func platform() -> String {
-    
-    var size = 0
-    sysctlbyname("hw.machine", nil, &size, nil, 0)
-    
-    var machine = [CChar](repeating: 0,  count: size)
-    sysctlbyname("hw.machine", &machine, &size, nil, 0)
-    
-    return String(cString: machine)
-    
-  }
-  
   func shell(command: String) -> Int32 {
     let task = Process()
     task.launchPath = "/usr/bin/env"
@@ -34,14 +19,13 @@ struct RSwitch: ParsableCommand {
     return task.terminationStatus
   }
   
-  func handleRSwitch(vers: String, arch: String) {
+  func handleRSwitch(vers: String) {
     
     let fm = FileManager.default
     let rmLink = (RVersions.macosRFramework as NSString).appendingPathComponent("Current")
 
     var isDir: ObjCBool = true
 
-    let archComponent = arch == "x86_64" ? "" : "-\(arch)"
     var versComponent: String = ""
 
     let versComponents = vers.split(separator: ".")
@@ -53,7 +37,7 @@ struct RSwitch: ParsableCommand {
       return()
     }
     
-    let newLink = (RVersions.macosRFramework as NSString).appendingPathComponent("\(versComponent)\(archComponent)")
+    let newLink = (RVersions.macosRFramework as NSString).appendingPathComponent("\(versComponent)\(RVersions.archSuffix)")
 
     if (fm.fileExists(atPath: newLink, isDirectory: &isDir)) {
       if (!isDir.boolValue) {
@@ -61,6 +45,10 @@ struct RSwitch: ParsableCommand {
         print(msg)
         return()
       }
+    } else {
+      let msg = "R \(versComponent) (arm64) is not installed."
+      print(msg)
+      return()
     }
     
     do {
@@ -92,11 +80,7 @@ struct RSwitch: ParsableCommand {
     
     if let vers = vers  {
       
-      if let arch = arch {
-        handleRSwitch(vers: vers, arch: arch)
-      } else {
-        handleRSwitch(vers: vers, arch: platform())
-      }
+      handleRSwitch(vers: vers)
       
     } else {
       
