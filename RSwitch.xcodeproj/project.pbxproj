@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0146075C27BE8AB0001C5E64 /* rswitch-cli in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0146075B27BE8AB0001C5E64 /* rswitch-cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		0146075C27BE8AB0001C5E64 /* rswitch-cli in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0147150127BD4FB900982AE7 /* rswitch-cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0147150427BD4FB900982AE7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0147150327BD4FB900982AE7 /* main.swift */; };
 		0147150A27BD517800982AE7 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 0147150927BD517800982AE7 /* ArgumentParser */; };
 		0147150C27BD557D00982AE7 /* RVersions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0147150B27BD557D00982AE7 /* RVersions.swift */; };
@@ -26,6 +26,16 @@
 		A70B6250237B022700A2BA73 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70B624F237B022700A2BA73 /* MainViewController.swift */; };
 		A70B6252237B078200A2BA73 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70B6251237B078200A2BA73 /* EventMonitor.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01A0C0DE2F00000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A70B6228237AF87000A2BA73 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0147150027BD4FB900982AE7;
+			remoteInfo = "rswitch-cli";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		0146075627BE83B9001C5E64 /* CopyFiles */ = {
@@ -51,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		0146075827BE8630001C5E64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0146075B27BE8AB0001C5E64 /* rswitch-cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "rswitch-cli"; path = "DerivedData/RSwitch/Build/Products/Release/rswitch-cli"; sourceTree = "<group>"; };
 		0147150127BD4FB900982AE7 /* rswitch-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rswitch-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0147150327BD4FB900982AE7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0147150B27BD557D00982AE7 /* RVersions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVersions.swift; sourceTree = "<group>"; };
@@ -106,7 +115,6 @@
 		A70B6227237AF87000A2BA73 = {
 			isa = PBXGroup;
 			children = (
-				0146075B27BE8AB0001C5E64 /* rswitch-cli */,
 				A70B6232237AF87000A2BA73 /* RSwitch */,
 				A70B6231237AF87000A2BA73 /* Products */,
 			);
@@ -204,6 +212,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				01A0C0DE2F00000000000002 /* PBXTargetDependency */,
 			);
 			name = RSwitch;
 			packageProductDependencies = (
@@ -295,6 +304,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01A0C0DE2F00000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0147150027BD4FB900982AE7 /* rswitch-cli */;
+			targetProxy = 01A0C0DE2F00000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A70B623C237AF87700A2BA73 /* Main.storyboard */ = {
