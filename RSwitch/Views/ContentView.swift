@@ -41,7 +41,7 @@ struct Footer: View {
     HStack(alignment: .bottom) {
       Text("RSwitch \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)").font(.caption)
       Spacer()
-      VStack(alignment: .trailing) {
+      HStack {
         Button(
           action: {
           prefsShowing.toggle()
@@ -49,6 +49,16 @@ struct Footer: View {
         ) {
           Image(systemName: "gear")
         }
+        .help("Preferences")
+        Button(
+          action: {
+          NSApp.terminate(nil)
+        }
+        ) {
+          Image(systemName: "power")
+        }
+        .keyboardShortcut("q", modifiers: .command)
+        .help("Quit RSwitch")
       }.font(.caption)
     }
   }
